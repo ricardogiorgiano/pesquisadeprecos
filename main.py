@@ -9,27 +9,34 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
-baseDados = "basededados.xlsx"
+baseDados = pd.read_excel(r'basededados.xlsx')
+baseDados = baseDados.fillna('-')
 
+print(baseDados)
 
-UrlLA = "https://www.americanas.com.br/busca/"
-UrlMA = "https://www.magazineluiza.com.br/busca/"
-UrlGO = "https://www.google.com.br/search?tbm=shop&hl=pt-BR&psb=1&ved=2ahUKEwiW_9WUsOv2AhWRUEgAHUAeAQ0Qu-kFegQIABAK&q="
+def transformar_texto(texto):
+    return float(texto.replace('R$', '').replace('.', '').replace(',', '.'))
 
+driver = webdriver.Chrome()
+#driver.set_window_position(-10000,0)
 
-
-df = pd.read_excel(baseDados)
-df.count
-
-
-
-for lin in range(len(df)):
+for i, linha in baseDados.iterrows():
     
-    linkAM = ("")
-    UrlAM = "https://www.amazon.com.br/s?k="
-    chrome = webdriver.Chrome() #Carrega o Chrome
-    chrome.get(UrlAM,{lin}) #Entra na URL    
-    
+    UrlAM = driver.get("https://www.amazon.com.br/s?k=" + str(linha['EAN']))
+    #linkAM = 
+
+
+baseDados.loc[i,'LINK AMAZON'] = UrlAM
+
+
+baseDados.to_excel('basededados.xlsx')
+
+
+#UrlLA = "https://www.americanas.com.br/busca/"
+#UrlMA = "https://www.magazineluiza.com.br/busca/"
+#UrlGO = "https://www.google.com.br/search?tbm=shop&hl=pt-BR&psb=1&ved=2ahUKEwiW_9WUsOv2AhWRUEgAHUAeAQ0Qu-kFegQIABAK&q="
+
+
 
 
 
