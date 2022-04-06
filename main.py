@@ -28,17 +28,16 @@ for i, linha in baseDados.iterrows():
     UrlAM = driver.get("https://www.amazon.com.br/s?k=" + str(linha['EAN']))
     driver.find_element_by_xpath('//*[@id="search"]/div[1]/div[1]/div/span[3]/div[2]/div[2]/div/div/div/div/div[2]/div[1]/h2/a').click()
     
-    
     linkAM = driver.current_url
 
     baseDados.loc[i,'LINK AMAZON'] = linkAM
-    baseDados.to_excel('basededados.xlsx')
+    
+    driver.find_element_by_xpath('//*[@id="corePriceDisplay_desktop_feature_div"]/div[1]/span/span[1]').text
 
-    precoAM = driver.find_element_by_xpath('/html/body/div[2]/div[2]/div[5]/div[4]/div[1]/div[2]/div/div/div/div/form/div/div/div/div/div[2]/div[1]/div/span/span[1]').text
     #precoAM = transformar_texto
-    print(precoAM)
-    baseDados.loc[i,'precoAM'] = precoAM
-    baseDados.to_excel('basededados.xlsx')
+    #print(precoAM)
+    #baseDados.loc[i,'precoAM'] = precoAM
+    #baseDados.to_excel('basededados.xlsx')
 
 
 
